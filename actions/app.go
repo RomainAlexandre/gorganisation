@@ -2,16 +2,18 @@ package actions
 
 import (
 	"github.com/gobuffalo/buffalo"
+	"github.com/gobuffalo/buffalo-pop/pop/popmw"
 	"github.com/gobuffalo/envy"
+	contenttype "github.com/gobuffalo/mw-contenttype"
 	forcessl "github.com/gobuffalo/mw-forcessl"
 	paramlogger "github.com/gobuffalo/mw-paramlogger"
+
+	"github.com/rs/cors"
 	"github.com/unrolled/secure"
 
-	"github.com/gobuffalo/buffalo-pop/pop/popmw"
-	contenttype "github.com/gobuffalo/mw-contenttype"
-	"github.com/gobuffalo/x/sessions"
+	"github.com/markbates/goth/gothic"
+
 	"github.com/romainalexandre/gorganisation/models"
-	"github.com/rs/cors"
 )
 
 // ENV is used to help switch settings based on where the
@@ -35,8 +37,7 @@ var app *buffalo.App
 func App() *buffalo.App {
 	if app == nil {
 		app = buffalo.New(buffalo.Options{
-			Env:          ENV,
-			SessionStore: sessions.Null{},
+			Env: ENV,
 			PreWares: []buffalo.PreWare{
 				cors.Default().Handler,
 			},
@@ -56,9 +57,21 @@ func App() *buffalo.App {
 		//  c.Value("tx").(*pop.Connection)
 		// Remove to disable this.
 		app.Use(popmw.Transaction(models.DB))
+		app.Use(SetCurrentUser)
+		app.Use(Authorize)
 
+		// Routes
 		app.GET("/", HomeHandler)
+		app.Middleware.Skip(Authorize, HomeHandler)
+
 		app.Resource("/users", UsersResource{})
+
+		auth := app.Group("/auth")
+		beginAuthHandler := buffalo.WrapHandlerFunc(gothic.BeginAuthHandler)
+		auth.GET("/{provider}", beginAuthHandler)
+		auth.GET("/{provider}/callback", AuthCallback)
+		auth.DELETE("", AuthDestroy)
+		auth.Middleware.Skip(Authorize, beginAuthHandler, AuthCallback)
 	}
 
 	return app

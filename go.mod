@@ -18,16 +18,17 @@ require (
 	github.com/gobuffalo/syncx v0.0.0-20190224160051-33c29581e754 // indirect
 	github.com/gobuffalo/uuid v2.0.5+incompatible
 	github.com/gobuffalo/validate v2.0.3+incompatible
-	github.com/gobuffalo/x v0.0.0-20190224155809-6bb134105960
+	github.com/gobuffalo/x v0.0.0-20190224155809-6bb134105960 // indirect
 	github.com/golang/protobuf v1.3.0 // indirect
 	github.com/konsorten/go-windows-terminal-sequences v1.0.2 // indirect
+	github.com/markbates/goth v1.49.0
 	github.com/markbates/grift v1.0.5
 	github.com/mattn/go-colorable v0.1.1 // indirect
 	github.com/mattn/go-isatty v0.0.6 // indirect
 	github.com/pkg/errors v0.8.1
 	github.com/rs/cors v1.6.0
 	github.com/unrolled/secure v1.0.0
-	golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2
+	golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2 // indirect
 	golang.org/x/net v0.0.0-20190301231341-16b79f2e4e95 // indirect
 	golang.org/x/sys v0.0.0-20190308023053-584f3b12f43e // indirect
 	golang.org/x/tools v0.0.0-20190308174544-00c44ba9c14f // indirect

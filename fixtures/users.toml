@@ -4,13 +4,10 @@ name = "lots of users"
   [[scenario.table]]
     name = "users"
 
-  [[scenario.table]]
-    name = "users"
-
     [[scenario.table.row]]
       id = "<%= uuidNamed("roro") %>"
-      email = "roro@test.com"
-      password_hash = "random_string"
+      name = "roro"
+      provider = "github"
+      provider_id = "githubID1"
       created_at = "<%= now() %>"
       updated_at = "<%= now() %>"
-

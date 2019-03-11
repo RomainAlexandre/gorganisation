@@ -1,5 +1,7 @@
 create_table("users") {
 	t.Column("id", "uuid", {primary: true})
-  t.Column("email", "string", {})
-  t.Column("password_hash", "string", {})
+  t.Column("name", "string", {})
+  t.Column("provider", "string", {})
+  t.Column("provider_id", "string", {})
 }
+add_index("users", ["provider", "provider_id"], {"unique": true})
