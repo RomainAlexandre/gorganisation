@@ -7,8 +7,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const paths = require('./config/paths');
-const publicPath = ('./public');
-const cleanPaths = [paths.appBuild.concat("/assets/js"), paths.appBuild.concat("/assets/css")]
+const publicPath = ('/');
+const cleanPaths = [paths.appBuild.concat(__dirname + "/public/assets/js"), paths.appBuild.concat(__dirname + "/public/assets/js")]
 
 // Note: defined here because it will be used more than once.
 const cssFilename = 'assets/css/[name].[contenthash:8].css';
@@ -22,7 +22,7 @@ if (process.env.NODE_ENV == 'development') {
 	module.exports = {
 	  // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
     // See the discussion in https://github.com/facebookincubator/create-react-app/issues/343.
-    devtool: 'cheap-module-source-map',
+      devtool: 'cheap-module-source-map',
 	  // These are the "entry points" to our application.
 	  // This means they will be the "root" imports that are included in JS bundle.
 	  // The first two entry points enable "hot" CSS and auto-refreshes for JS.
@@ -421,5 +421,5 @@ if (process.env.NODE_ENV == 'development') {
 		  net: 'empty',
 		  tls: 'empty',
 		},
-  };
+	};
 }

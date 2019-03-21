@@ -6,14 +6,13 @@ import (
 )
 
 var r *render.Engine
-var assetsBox = packr.New("app:assets", "../public")
 
 func init() {
 	r = render.New(render.Options{
 		DefaultContentType: "application/json",
 
 		// Box containing all of the templates:
-		TemplatesBox: packr.New("app:templates", "../templates"),
-		AssetsBox:    assetsBox,
+		TemplatesBox: packr.New("app:templates", "../public"),
+		AssetsBox:    packr.New("app:assets", "../public"),
 	})
 }
