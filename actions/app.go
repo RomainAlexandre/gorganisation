@@ -72,6 +72,8 @@ func App() *buffalo.App {
 		auth.GET("/{provider}/callback", AuthCallback)
 		auth.DELETE("", AuthDestroy)
 		auth.Middleware.Skip(Authorize, beginAuthHandler, AuthCallback)
+
+		app.ServeFiles("/", assetsBox) // serve files from the public directory
 	}
 
 	return app
