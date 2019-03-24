@@ -43,7 +43,11 @@ const configurator = {
       new CopyWebpackPlugin([{from: "./assets",to: ""}], {copyUnmodified: true, ignore: ["css/**", "js/**", "src/**"] }),
       new Webpack.LoaderOptionsPlugin({minimize: true,debug: false}),
 			new ManifestPlugin({fileName: "./assets/manifest.json"}),
-			new HtmlWebpackPlugin({inject: true, template: './templates/index.html',})
+      new HtmlWebpackPlugin({inject: true, template: './templates/index.html',}),
+      new Webpack.DefinePlugin({
+        UNSPLASH_API_ID: process.env.UNSPLASH_API_ID,
+        UNSPLASH_API_SECRET: process.env.UNSPLASH_API_SECRET
+      }),
     ];
 
     return plugins
