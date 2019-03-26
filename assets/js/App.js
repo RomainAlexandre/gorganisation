@@ -26,29 +26,26 @@ class App extends Component {
 
   componentDidMount() {
     this.setState({isLoading: true});
-    let quotePromise = fetch('http://quotes.rest/qod.json?category=inspire')
+    let quotePromise = fetch('http://quotes.rest/qod.json?category=inspire').then(data => data.json())
+
     let backgroundPromise = unsplash.photos.getRandomPhoto({
       collections: [827743],
       width: 1920,
       height: 1080,
       featured: true
-    })
+    }).then(data => data.json())
 
     Promise.all([quotePromise, backgroundPromise])
       .then(([quoteData, backgroundData]) => {
-        debugger
-        let quoteJson = quoteData.json();
-        let backgroundJson = backgroundData.json();
         this.setState({
-          // quote: quoteJson.contents.quotes[0],
-          imageUrl: backgroundJson.urls.full,
+          quote: quoteData.contents.quotes[0],
+          imageUrl: backgroundData.urls.full,
           isLoading: false,
         })
       });
   }
 
   render() {
-
     let isLoading = this.state.isLoading;
     let quote = this.state.quote;
     let imageUrl = this.state.imageUrl;
@@ -60,10 +57,9 @@ class App extends Component {
     return (
       <div>
         <div className="App">
-          <Background imageUrl={imageUrl}>
-            <Clock/>
-            <Quote quote={quote}/>
-          </Background>
+          <Background imageUrl={imageUrl}/>
+          <Clock/>
+          <Quote quote={quote}/>
         </div>
       </div>
     );
